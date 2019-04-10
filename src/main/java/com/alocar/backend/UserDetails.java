@@ -10,7 +10,7 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class Users {
+public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
@@ -19,7 +19,7 @@ public class Users {
     private String email;
     private String phoneNumber;
 
-    public Users() {
+    public UserDetails() {
     }
 
     public Integer getUserId() {
@@ -91,8 +91,8 @@ public class Users {
             return this;
         }
 
-        public Users build() {
-            Users user = new Users();
+        public UserDetails build() {
+            UserDetails user = new UserDetails();
             user.setFirstName(this.firstName);
             user.setLastName(this.lastName);
             user.setEmail(this.email);
