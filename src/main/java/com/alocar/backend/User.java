@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Created by Andrei Vatavu on 4/11/2019
+ */
+
 @Entity
 public class User {
     @Id
@@ -58,7 +62,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public class UserBuilder {
+    public static class UserBuilder {
         private String firstName;
         private String lastName;
         private String email;
