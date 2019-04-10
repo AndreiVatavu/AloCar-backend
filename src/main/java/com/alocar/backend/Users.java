@@ -10,16 +10,16 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class User {
+public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
 
-    public User() {
+    public Users() {
     }
 
     public Integer getUserId() {
@@ -91,8 +91,8 @@ public class User {
             return this;
         }
 
-        public User build() {
-            User user = new User();
+        public Users build() {
+            Users user = new Users();
             user.setFirstName(this.firstName);
             user.setLastName(this.lastName);
             user.setEmail(this.email);

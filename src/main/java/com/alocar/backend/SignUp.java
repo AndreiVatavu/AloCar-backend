@@ -21,14 +21,15 @@ public class SignUp {
 
     @PostMapping("/signup")
     public ResponseEntity signUp(@RequestBody SignUpRequest signUpRequest) {
-        User user = new User.UserBuilder()
+        logger.info("Trying to create a new user");
+        Users user = new Users.UserBuilder()
                 .withFirstName(signUpRequest.getFirstName())
                 .withLastName(signUpRequest.getLastName())
                 .withEmail(signUpRequest.getEmailAddress())
                 .withPhoneNumber(signUpRequest.getPhoneNumber())
                 .build();
         userRepository.save(user);
-        logger.info("User successfully registered");
+        logger.info("Users successfully registered");
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -37,14 +38,15 @@ public class SignUp {
                                      @RequestParam String lastName,
                                      @RequestParam String email,
                                      @RequestParam String phone) {
-        User user = new User.UserBuilder()
+        logger.info("Trying to create a new user");
+        Users user = new Users.UserBuilder()
                 .withFirstName(firstName)
                 .withLastName(lastName)
                 .withEmail(email)
                 .withPhoneNumber(phone)
                 .build();
         userRepository.save(user);
-        logger.info("User successfully registered");
+        logger.info("Users successfully registered");
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }
