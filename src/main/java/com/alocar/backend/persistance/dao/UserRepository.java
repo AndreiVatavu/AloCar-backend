@@ -1,5 +1,6 @@
-package com.alocar.backend;
+package com.alocar.backend.persistance.dao;
 
+import com.alocar.backend.persistance.model.UserDetails;
 import org.springframework.data.repository.CrudRepository;
 
 /**

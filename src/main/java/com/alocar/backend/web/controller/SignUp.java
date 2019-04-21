@@ -1,5 +1,8 @@
-package com.alocar.backend;
+package com.alocar.backend.web.controller;
 
+import com.alocar.backend.SignUpRequest;
+import com.alocar.backend.persistance.dao.UserRepository;
+import com.alocar.backend.persistance.model.UserDetails;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 /**
  * Created by Andrei Vatavu on 4/11/2019
@@ -23,6 +28,7 @@ public class SignUp {
     public ResponseEntity signUp(@RequestBody SignUpRequest signUpRequest) {
         logger.info("Trying to create a new user");
         UserDetails user = new UserDetails.UserBuilder()
+                .withUserId("Andrei")
                 .withFirstName(signUpRequest.getFirstName())
                 .withLastName(signUpRequest.getLastName())
                 .withEmail(signUpRequest.getEmailAddress())

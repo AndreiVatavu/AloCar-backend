@@ -1,0 +1,49 @@
+{
+  "properties": [
+    {
+      "name": "users.datasource",
+      "type": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties",
+      "sourceType": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties"
+    },
+    {
+      "name": "users.datasource.jdbcp-url",
+      "type": "java.lang.String",
+      "description": "Description for cars.datasource.jdbcp-url.",
+      "sourceType": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties"
+    },
+    {
+      "name": "users.datasource.username",
+      "type": "java.lang.String",
+      "description": "Description for cars.datasource.username.",
+      "sourceType": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties"
+    },
+    {
+      "name": "users.datasource.password",
+      "type": "java.lang.String",
+      "description": "Description for users.datasource.password.",
+      "sourceType": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties"
+    },
+    {
+      "name": "cars.datasource",
+      "type": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties",
+      "sourceType": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties"
+    },
+    {
+      "name": "cars.datasource.jdbcp-url",
+      "type": "java.lang.String",
+      "description": "Description for cars.datasource.jdbcp-url.",
+      "sourceType": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties"
+    },
+    {
+      "name": "cars.datasource.username",
+      "type": "java.lang.String",
+      "description": "Description for cars.datasource.username.",
+      "sourceType": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties"
+    },
+    {
+      "name": "cars.datasource.password",
+      "type": "java.lang.String",
+      "description": "Description for cars.datasource.password.",
+      "sourceType": "org.springframework.boot.autoconfigure.jdbc.DataSourceProperties"
+    }
+  ] }
