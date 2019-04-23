@@ -37,10 +37,10 @@ public class UserService implements IUserService{
                 .withPhoneNumber(signUpRequest.getPhoneNumber())
                 .build();
         Credentials credentials = new Credentials();
-        credentials.setUserId(user.getUserId());
         credentials.setPasswordHash(passwordEncoder.encode(signUpRequest.getPassword()));
 
         UserDetails ret = userRepository.save(user);
+        credentials.setUserId(ret.getUserId());
         credentialsRepository.save(credentials);
 
         return 0;
