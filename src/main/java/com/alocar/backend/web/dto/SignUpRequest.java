@@ -1,4 +1,4 @@
-package com.alocar.backend;
+package com.alocar.backend.web.dto;
 
 /**
  * Created by Andrei Vatavu on 4/11/2019

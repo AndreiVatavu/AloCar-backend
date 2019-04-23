@@ -15,9 +15,8 @@ import java.sql.Timestamp;
 public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer userId;
 
-    private String userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -33,22 +32,14 @@ public class UserDetails {
     @CreationTimestamp
     private Timestamp modificationDate;
 
-    public UserDetails() {
+    private UserDetails() {
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -117,7 +108,6 @@ public class UserDetails {
     }
 
     public static class UserBuilder {
-        private String userId;
         private String firstName;
         private String lastName;
         private String email;
@@ -126,11 +116,6 @@ public class UserDetails {
         private Date dateOfBirth = null;
 
         public UserBuilder() {
-        }
-
-        public UserBuilder withUserId(String userId) {
-            this.userId = userId;
-            return this;
         }
 
         public UserBuilder withFirstName(String firstName) {
@@ -165,7 +150,6 @@ public class UserDetails {
 
         public UserDetails build() {
             UserDetails user = new UserDetails();
-            user.setUserId(this.userId);
             user.setFirstName(this.firstName);
             user.setLastName(this.lastName);
             user.setEmail(this.email);

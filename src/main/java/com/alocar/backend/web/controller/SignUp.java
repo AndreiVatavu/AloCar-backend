@@ -1,6 +1,7 @@
 package com.alocar.backend.web.controller;
 
-import com.alocar.backend.SignUpRequest;
+import com.alocar.backend.service.IUserService;
+import com.alocar.backend.web.dto.SignUpRequest;
 import com.alocar.backend.persistance.dao.UserRepository;
 import com.alocar.backend.persistance.model.UserDetails;
 import org.apache.log4j.Logger;
@@ -12,29 +13,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 /**
  * Created by Andrei Vatavu on 4/11/2019
  */
 
 @RestController
 public class SignUp {
+
+    private Logger logger = Logger.getLogger(SignUp.class);
+
     @Autowired
     private UserRepository userRepository;
-    private Logger logger = Logger.getLogger(SignUp.class);
+
+    @Autowired
+    private IUserService userService;
 
     @PostMapping("/signup")
     public ResponseEntity signUp(@RequestBody SignUpRequest signUpRequest) {
         logger.info("Trying to create a new user");
-        UserDetails user = new UserDetails.UserBuilder()
-                .withUserId("Andrei")
-                .withFirstName(signUpRequest.getFirstName())
-                .withLastName(signUpRequest.getLastName())
-                .withEmail(signUpRequest.getEmailAddress())
-                .withPhoneNumber(signUpRequest.getPhoneNumber())
-                .build();
-        userRepository.save(user);
+        userService.registerNewUserAccount(signUpRequest);
         logger.info("UserDetails successfully registered");
         return ResponseEntity.ok(HttpStatus.OK);
     }
