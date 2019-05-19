@@ -9,14 +9,15 @@ import javax.validation.constraints.Size;
 /**
  * Created by Andrei Vatavu on 4/23/2019
  */
+
 public class UserDetailsDto {
 
-    @NotNull
-    @Size(min = 1)
+    @NotNull(message = "{Invalid.empty.firstname}")
+    @Size(min = 1, message = "{Invalid.firstName.size}")
     private String firstName;
 
-    @NotNull
-    @Size(min = 1)
+    @NotNull(message = "{Invalid.empty.lastname}")
+    @Size(min = 1, message = "{Invalid.lastName.size}")
     private String lastName;
 
     @NotNull
@@ -27,8 +28,8 @@ public class UserDetailsDto {
     @NotNull
     private String phoneNumber;
 
-    @NotNull
-    @Size(min = 1)
+    @NotNull(message = "{Password can't be empty}")
+    @Size(min = 1, message = "{Invalid.empty.password}")
     private String password;
 
     public UserDetailsDto() {
