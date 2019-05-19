@@ -4,7 +4,8 @@ import com.alocar.backend.persistance.dao.CredentialsRepository;
 import com.alocar.backend.persistance.dao.UserRepository;
 import com.alocar.backend.persistance.model.Credentials;
 import com.alocar.backend.persistance.model.UserDetails;
-import com.alocar.backend.web.dto.SignUpRequest;
+import com.alocar.backend.web.dto.UserDetailsDto;
+import com.alocar.backend.web.error.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,20 +30,27 @@ public class UserService implements IUserService{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public int registerNewUserAccount(SignUpRequest signUpRequest) {
+    public int registerNewUserAccount(UserDetailsDto userDto) {
+        if (emailExists(userDto.getEmailAddress())) {
+            throw new UserAlreadyExistException("There is already an account with email address: " + userDto.getEmailAddress());
+        }
         UserDetails user = new UserDetails.UserBuilder()
-                .withFirstName(signUpRequest.getFirstName())
-                .withLastName(signUpRequest.getLastName())
-                .withEmail(signUpRequest.getEmailAddress())
-                .withPhoneNumber(signUpRequest.getPhoneNumber())
+                .withFirstName(userDto.getFirstName())
+                .withLastName(userDto.getLastName())
+                .withEmail(userDto.getEmailAddress())
+                .withPhoneNumber(userDto.getPhoneNumber())
                 .build();
         Credentials credentials = new Credentials();
-        credentials.setPasswordHash(passwordEncoder.encode(signUpRequest.getPassword()));
+        credentials.setPasswordHash(passwordEncoder.encode(userDto.getPassword()));
 
         UserDetails ret = userRepository.save(user);
         credentials.setUserId(ret.getUserId());
         credentialsRepository.save(credentials);
 
         return 0;
+    }
+
+    private boolean emailExists(String email) {
+        return userRepository.findByEmail(email) != null;
     }
 }
