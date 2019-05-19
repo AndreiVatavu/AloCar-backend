@@ -2,7 +2,6 @@ package com.alocar.backend.web.dto;
 
 import com.alocar.backend.validation.ValidEmail;
 import com.alocar.backend.validation.ValidPhoneNumber;
-import org.springframework.context.annotation.PropertySource;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,12 +12,12 @@ import javax.validation.constraints.Size;
 
 public class UserDetailsDto {
 
-    @NotNull(message = "{First name can't be emty}")
+    @NotNull(message = "{Invalid.empty.firstname}")
     @Size(min = 1, message = "{Invalid.firstName.size}")
     private String firstName;
 
-    @NotNull(message = "{Last name can't be emty}")
-    @Size(min = 1, message = "{Invalid last name}")
+    @NotNull(message = "{Invalid.empty.lastname}")
+    @Size(min = 1, message = "{Invalid.lastName.size}")
     private String lastName;
 
     @NotNull
@@ -29,8 +28,8 @@ public class UserDetailsDto {
     @NotNull
     private String phoneNumber;
 
-    @NotNull(message = "{Password can't be emty}")
-    @Size(min = 1, message = "{Invalid password}")
+    @NotNull(message = "{Password can't be empty}")
+    @Size(min = 1, message = "{Invalid.empty.password}")
     private String password;
 
     public UserDetailsDto() {
