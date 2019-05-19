@@ -11,15 +11,14 @@ import javax.validation.constraints.Size;
  * Created by Andrei Vatavu on 4/23/2019
  */
 
-@PropertySource("classpath:messages.properties")
 public class UserDetailsDto {
 
-    @NotNull
+    @NotNull(message = "{First name can't be emty}")
     @Size(min = 1, message = "{Invalid.firstName.size}")
     private String firstName;
 
-    @NotNull
-    @Size(min = 1, message = "Invalid last name")
+    @NotNull(message = "{Last name can't be emty}")
+    @Size(min = 1, message = "{Invalid last name}")
     private String lastName;
 
     @NotNull
@@ -30,8 +29,8 @@ public class UserDetailsDto {
     @NotNull
     private String phoneNumber;
 
-    @NotNull
-    @Size(min = 1, message = "Invalid password")
+    @NotNull(message = "{Password can't be emty}")
+    @Size(min = 1, message = "{Invalid password}")
     private String password;
 
     public UserDetailsDto() {
