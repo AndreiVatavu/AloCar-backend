@@ -74,4 +74,14 @@ public class UserDetailsDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("First name: ").append(this.firstName)
+                .append(", Last name: ").append(this.lastName)
+                .append(", E-mail address: ").append(this.emailAddress)
+                .append(", Phone number: ").append(this.phoneNumber);
+        return str.toString();
+    }
 }

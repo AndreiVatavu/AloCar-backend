@@ -31,9 +31,9 @@ public class SignUpController {
     @PostMapping("/signup")
     @ResponseBody
     public String signUp(@RequestBody @Valid UserDetailsDto userDto) {
-        logger.info("Trying to create a new user");
+        logger.info("Trying to create a new user: " + userDto.toString());
         userService.registerNewUserAccount(userDto);
-        logger.info("UserDetails successfully registered");
+        logger.info("User: " + userDto.toString() + " successfully created");
         return "OK";
     }
 
