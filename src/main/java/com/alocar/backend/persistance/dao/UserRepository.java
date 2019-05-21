@@ -10,5 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserRepository extends CrudRepository<UserDetails, Integer> {
 
     UserDetails findByEmail(String email);
+
+    UserDetails findByPhoneNumber(String phoneNumber);
     
 }

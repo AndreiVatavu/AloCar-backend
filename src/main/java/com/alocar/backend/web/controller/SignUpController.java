@@ -1,8 +1,10 @@
 package com.alocar.backend.web.controller;
 
-import com.alocar.backend.service.IUserService;
-import com.alocar.backend.persistance.dao.UserRepository;
+import com.alocar.backend.service.UserService;
 import com.alocar.backend.web.dto.UserDetailsDto;
+import com.alocar.backend.web.error.UserAlreadyExistException;
+import com.alocar.backend.web.response.GenericResponse;
+import com.alocar.backend.web.response.SignUpStatusCode;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -23,29 +25,29 @@ public class SignUpController {
     private Logger logger = Logger.getLogger(SignUpController.class);
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @PostMapping("/signup")
     @ResponseBody
-    public String signUp(@RequestBody @Valid UserDetailsDto userDto) {
+    public GenericResponse signUp(@RequestBody @Valid UserDetailsDto userDto) {
         logger.info("Trying to create a new user: " + userDto.toString());
-        userService.registerNewUserAccount(userDto);
-        logger.info("User: " + userDto.toString() + " successfully created");
-        return "OK";
+        try {
+            userService.registerNewUserAccount(userDto);
+            logger.info("User: " + userDto.toString() + " successfully created");
+            return GenericResponse.ok();
+        } catch (UserAlreadyExistException e) {
+            return new GenericResponse(SignUpStatusCode.USER_ALREADY_EXIST.getStatusCode(), e.getMessage());
+        }
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleException(MethodArgumentNotValidException exception) {
-
-        String errorMsg = exception.getBindingResult().getFieldErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+    public GenericResponse handleException(MethodArgumentNotValidException exception) {
+        logger.warn(exception.getMessage());
+        GenericResponse errorResponse = exception.getBindingResult().getFieldErrors().stream()
+                .map(l -> new GenericResponse(SignUpStatusCode.fromString(l.getField()).getStatusCode(), l.getDefaultMessage()))
                 .findFirst()
-                .orElse(exception.getMessage());
+                .get();
 
-        return errorMsg;
+        return errorResponse;
     }
 }
