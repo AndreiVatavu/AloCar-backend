@@ -12,12 +12,12 @@ import javax.validation.constraints.Size;
 
 public class UserDetailsDto {
 
-    @NotNull(message = "{Invalid.empty.firstname}")
-    @Size(min = 1, message = "{Invalid.firstName.size}")
+    @NotNull(message = "First name can't be empty")
+    @Size(min = 1, message = "Invalid first name")
     private String firstName;
 
-    @NotNull(message = "{Invalid.empty.lastname}")
-    @Size(min = 1, message = "{Invalid.lastName.size}")
+    @NotNull(message = "Last name can't be empty")
+    @Size(min = 1, message = "Invalid last name")
     private String lastName;
 
     @NotNull
@@ -29,7 +29,7 @@ public class UserDetailsDto {
     private String phoneNumber;
 
     @NotNull(message = "{Password can't be empty}")
-    @Size(min = 1, message = "{Invalid.empty.password}")
+    @Size(min = 1, message = "Invalid password")
     private String password;
 
     public UserDetailsDto() {
