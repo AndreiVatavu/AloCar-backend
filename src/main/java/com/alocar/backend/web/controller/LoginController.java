@@ -25,19 +25,20 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
+    @PostMapping(path = "/login/")
     @ResponseBody
     public LoginResponse login(@RequestBody UserCredentialsDto credentials) {
         logger.info("User: " + credentials.getEmail() + " is trying to connect");
         LoginResponse response = userService.login(credentials);
         if (response.getCode() == LoginStatusCode.OK.getStatusCode()) {
             logger.info("User: " + credentials.getEmail() + " successfully connected");
+        } else {
+            logger.info("User: " + credentials.getEmail() + " couldn't connect");
         }
-        logger.info("User: " + credentials.getEmail() + " couldn't connect");
         return response;
     }
 
-    @PostMapping("/logout")
+    @PostMapping(path = "/logout/")
     @ResponseBody
     public GenericResponse logout(@RequestBody String authToken) {
         userService.logout(authToken);
