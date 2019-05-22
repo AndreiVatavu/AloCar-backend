@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
             loginResponse.setCode(LoginStatusCode.OK.getStatusCode());
             loginResponse.setMessage("Success login");
             loginResponse.setAuthToken(UUID.randomUUID().toString());
+            loginResponse.setUid(credentials.getUserId());
             activeUsersRepository.addUser(loginResponse.getAuthToken(), credentials.getUserId());
         } else {
             loginResponse.setCode(LoginStatusCode.FAIL.getStatusCode());
