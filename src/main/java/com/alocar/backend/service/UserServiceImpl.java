@@ -5,6 +5,7 @@ import com.alocar.backend.persistance.dao.UserRepository;
 import com.alocar.backend.persistance.model.Credentials;
 import com.alocar.backend.persistance.model.UserDetails;
 import com.alocar.backend.security.ActiveUsersRepository;
+import com.alocar.backend.web.dto.ContactDto;
 import com.alocar.backend.web.dto.UserCredentialsDto;
 import com.alocar.backend.web.dto.UserDetailsDto;
 import com.alocar.backend.web.error.UserAlreadyExistException;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -85,7 +87,9 @@ public class UserServiceImpl implements UserService {
         if (passwordEncoder.matches(credentialsDto.getPassword(), credentials.getPasswordHash())) {
             loginResponse.setCode(LoginStatusCode.OK.getStatusCode());
             loginResponse.setMessage("Success login");
-            activeUsersRepository.addUser(UUID.randomUUID().toString(), credentials.getUserId());
+            loginResponse.setAuthToken(UUID.randomUUID().toString());
+            loginResponse.setUid(credentials.getUserId());
+            activeUsersRepository.addUser(loginResponse.getAuthToken(), credentials.getUserId());
         } else {
             loginResponse.setCode(LoginStatusCode.FAIL.getStatusCode());
             loginResponse.setMessage("Error");
@@ -108,5 +112,16 @@ public class UserServiceImpl implements UserService {
 
     private boolean phoneNumberExists(String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber) != null;
+    }
+
+    @Override
+    public List<ContactDto> getAllContacts() {
+        try {
+            List<ContactDto> contacts = userRepository.getContacts();
+            return contacts;
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+            return null;
+        }
     }
 }

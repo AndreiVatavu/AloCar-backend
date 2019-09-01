@@ -3,8 +3,10 @@ package com.alocar.backend.persistance.model;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Set;
 
 /**
  * Created by Andrei Vatavu on 4/11/2019
@@ -12,7 +14,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(schema = "Users", name = "user_details")
-public class UserDetails {
+public class UserDetails implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
@@ -31,6 +33,9 @@ public class UserDetails {
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private Timestamp modificationDate;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private Set<CarsDetails> carsDetailsSet;
 
     private UserDetails() {
     }
@@ -105,6 +110,14 @@ public class UserDetails {
 
     public void setModificationDate(Timestamp modificationDate) {
         this.modificationDate = modificationDate;
+    }
+
+    public Set<CarsDetails> getCarsDetailsSet() {
+        return carsDetailsSet;
+    }
+
+    public void setCarsDetailsSet(Set<CarsDetails> carsDetailsSet) {
+        this.carsDetailsSet = carsDetailsSet;
     }
 
     public static class UserBuilder {

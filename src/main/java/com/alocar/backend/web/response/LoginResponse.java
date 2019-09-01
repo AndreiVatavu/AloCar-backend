@@ -7,6 +7,7 @@ public class LoginResponse {
     private int code;
     private String message;
     private String authToken;
+    private int uid;
 
     public LoginResponse() {
 
@@ -39,5 +40,13 @@ public class LoginResponse {
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 }

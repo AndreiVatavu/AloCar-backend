@@ -7,9 +7,6 @@ import com.alocar.backend.web.response.GenericResponse;
 import com.alocar.backend.web.response.SignUpStatusCode;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +24,7 @@ public class SignUpController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping("/signup/")
     @ResponseBody
     public GenericResponse signUp(@RequestBody @Valid UserDetailsDto userDto) {
         logger.info("Trying to create a new user: " + userDto.toString());
