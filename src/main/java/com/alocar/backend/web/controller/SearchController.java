@@ -3,17 +3,13 @@ package com.alocar.backend.web.controller;
 import com.alocar.backend.service.UserService;
 import com.alocar.backend.web.dto.ContactDto;
 import com.alocar.backend.web.util.YouTubeUtil;
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
+import com.google.api.services.youtube.model.SearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,15 +28,23 @@ public class SearchController {
     }
 
     @GetMapping("/searchYouTube/")
-    public void searchYouTube() throws Exception {
+    public List<ContactDto> searchYouTube(@RequestHeader String query) throws Exception {
         YouTube youtubeService = YouTubeUtil.getService();
-        // Define and execute the API request
         YouTube.Search.List request = youtubeService.search()
                 .list("snippet");
+        request.setKey(YouTubeUtil.API_KEY);
         SearchListResponse response = request.setMaxResults(25L)
-                .setQ("surfing")
+                .setQ(query)
                 .execute();
-        System.out.println(response);
+
+        List<ContactDto> contactDtos = new ArrayList<>();
+        for (SearchResult searchResult : response.getItems()) {
+            ContactDto contactDto = new ContactDto();
+            contactDto.setName(searchResult.getSnippet().getTitle());
+            contactDto.setImage(searchResult.getSnippet().getThumbnails().getDefault().getUrl());
+            contactDtos.add(contactDto);
+        }
+        return contactDtos;
     }
 
 }
