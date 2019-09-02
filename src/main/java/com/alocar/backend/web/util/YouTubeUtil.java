@@ -13,7 +13,7 @@ import com.google.api.services.youtube.YouTube;
 import java.security.GeneralSecurityException;
 
 public class YouTubeUtil {
-    public static final String API_KEY = "AIzaSyC_FMeN5J9yh5VK6Q-wlggAxOY9ooxxZeQ";
+    public static final String API_KEY = "AIzaSyAIcP93xHVbad9thZsRswvJTUiJQF6eDsk ";
 
     private static final String APPLICATION_NAME = "My First Project";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();

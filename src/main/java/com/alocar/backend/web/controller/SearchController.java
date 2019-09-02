@@ -42,6 +42,7 @@ public class SearchController {
             ContactDto contactDto = new ContactDto();
             contactDto.setName(searchResult.getSnippet().getTitle());
             contactDto.setImage(searchResult.getSnippet().getThumbnails().getDefault().getUrl());
+            contactDto.setLicencePlate(searchResult.getId().getVideoId());
             contactDtos.add(contactDto);
         }
         return contactDtos;
