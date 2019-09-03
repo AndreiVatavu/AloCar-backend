@@ -1,7 +1,11 @@
 package com.alocar.backend.web.controller;
 
+import com.alocar.backend.persistance.dao.FavoriteSongsRepository;
+import com.alocar.backend.persistance.model.FavoriteSongs;
 import com.alocar.backend.service.UserService;
 import com.alocar.backend.web.dto.ContactDto;
+import com.alocar.backend.web.dto.FavoriteSongDTO;
+import com.alocar.backend.web.response.GenericResponse;
 import com.alocar.backend.web.util.YouTubeUtil;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
@@ -21,6 +25,9 @@ public class SearchController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FavoriteSongsRepository favoriteSongsRepository;
 
     @GetMapping("/search/")
     public List<ContactDto> search() {
@@ -46,6 +53,36 @@ public class SearchController {
             contactDtos.add(contactDto);
         }
         return contactDtos;
+    }
+
+    @PostMapping("/saveFavorite")
+    public GenericResponse saveToFavorite(@RequestBody FavoriteSongDTO favoriteSongDTO) {
+        FavoriteSongs favoriteSong = new FavoriteSongs();
+        favoriteSong.setImage(favoriteSongDTO.getImage());
+        favoriteSong.setUserId(favoriteSongDTO.getUserId());
+        favoriteSong.setName(favoriteSongDTO.getName());
+        favoriteSong.setVideoId(favoriteSongDTO.getLicencePlate());
+
+        favoriteSongsRepository.save(favoriteSong);
+
+        return GenericResponse.ok();
+    }
+
+    @GetMapping("/getFavoriteSongs")
+    public List<FavoriteSongDTO> getFavoriteSongs(@RequestHeader String userId) {
+        List<FavoriteSongs> favoriteSongs = favoriteSongsRepository.findByUserId(userId);
+        List<FavoriteSongDTO> favoriteSongDTOS = new ArrayList<>();
+
+        for (FavoriteSongs favoriteSong : favoriteSongs) {
+            FavoriteSongDTO favoriteSongDTO = new FavoriteSongDTO();
+            favoriteSongDTO.setUserId(favoriteSong.getUserId());
+            favoriteSongDTO.setImage(favoriteSong.getImage());
+            favoriteSongDTO.setName(favoriteSong.getName());
+            favoriteSongDTO.setLicencePlate(favoriteSong.getVideoId());
+            favoriteSongDTOS.add(favoriteSongDTO);
+        }
+
+        return favoriteSongDTOS;
     }
 
 }
